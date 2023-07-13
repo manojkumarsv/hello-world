@@ -8,7 +8,7 @@ on:
         required: true
 
 jobs:
-  trigger-workflow-b:
+  trigger-InstallerGeneration:
     runs-on: ubuntu-latest
     
     steps:
@@ -17,7 +17,7 @@ jobs:
       run: |
         echo "{\"input\": \"${{ github.event.inputs.user_input }}\"}" > payload.json
       
-    - name: Trigger Workflow B
+    - name: Trigger InstallerGeneration
       uses: peter-evans/repository-dispatch@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
