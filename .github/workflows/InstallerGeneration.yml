@@ -1,0 +1,17 @@
+name: InstallerGeneration
+
+on:
+  repository_dispatch:
+    types:
+      - workflow-b-event
+
+jobs:
+  workflow-b-job:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Read JSON payload
+      id: read-payload
+      run: |
+        echo "Payload: ${{ github.event.client_payload }}"
+        # Use a script or tool to parse the JSON payload and access the values
