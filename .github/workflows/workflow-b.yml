@@ -1,4 +1,4 @@
-name: InstallerGeneration
+name: Workflow B
 
 on:
   repository_dispatch:
