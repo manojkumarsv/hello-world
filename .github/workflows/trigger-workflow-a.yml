@@ -25,6 +25,7 @@ jobs:
         echo "Hello ....."
       
     - name: Trigger Workflow B
+      id: trigger-b
       uses: peter-evans/repository-dispatch@v2.1.1
       with:
         token: ${{ secrets.GH_TOKEN }}
@@ -32,3 +33,11 @@ jobs:
 #         client-payload: ${{ steps.prepare-payload.outputs.payload }}
 #         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "STELabel": "${{ github.event.inputs.input1 }}", "DUTVersion": "${{ github.event.inputs.input2 }}" }'
         client-payload: '{"STELabel": "${{ github.event.inputs.input1 }}", "DUTVersion": "${{ github.event.inputs.input2 }}", "optionalParams": ${{ github.event.inputs.input3 }} }'
+        
+    - name: Check Workflow B status
+      id: check-b
+      run: |
+        echo "Workflow B run ID: ${{ steps.trigger-b.outputs.run_id }}"
+        echo "Workflow B status: ${{ steps.check-b.outputs.status }}"
+        echo "Workflow B conclusion: ${{ steps.check-b.outputs.conclusion }}"
+        # You can perform additional actions based on the status or conclusion of Workflow B
