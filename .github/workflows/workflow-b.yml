@@ -14,4 +14,5 @@ jobs:
       id: read-payload
       run: |
         echo "Payload: ${{ github.event.client_payload }}"
+        echo "Payload: ${{ toJson(github.event.client_payload) }}"
         # Use a script or tool to parse the JSON payload and access the values
