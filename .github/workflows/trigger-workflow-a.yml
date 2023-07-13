@@ -3,8 +3,11 @@ name: Trigger Workflow B
 on:
   workflow_dispatch:
     inputs:
-      user_input:
-        description: 'User input for Workflow A'
+      input1:
+        description: 'Input 1'
+        required: true
+      input2:
+        description: 'Input 2'
         required: true
 
 jobs:
@@ -15,13 +18,11 @@ jobs:
     - name: Prepare JSON payload
       id: prepare-payload
       run: |
-        echo "{\"input\": \"${{ github.event.inputs.user_input }}\"}" > payload.json
+        echo "{\"input1\": \"${{ github.event.inputs.input1 }}\", \"input2\": \"${{ github.event.inputs.input2 }}\"}" > payload.json
       
     - name: Trigger Workflow B
-      run: |
-        curl -X POST \
-          -H "Accept: application/vnd.github.everest-preview+json" \
-          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          -H "Content-Type: application/json" \
-          https://api.github.com/repos/${{ github.repository }}/actions/workflows/workflow-b/dispatches \
-          -d @payload.json
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        event-type: workflow-b-event
+        client-payload: ${{ steps.prepare-payload.outputs.payload }}
