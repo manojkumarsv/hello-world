@@ -27,4 +27,5 @@ jobs:
         token: ${{ secrets.GH_TOKEN }}
         event-type: workflow-b-event
 #         client-payload: ${{ steps.prepare-payload.outputs.payload }}
-        client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "STELabel": "${{ github.event.inputs.input1 }}", "DUTVersion": "${{ github.event.inputs.input2 }}" }'
+#         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "STELabel": "${{ github.event.inputs.input1 }}", "DUTVersion": "${{ github.event.inputs.input2 }}" }'
+        client-payload: '{"STELabel": "${{ github.event.inputs.input1 }}", "DUTVersion": "${{ github.event.inputs.input2 }}" }'
