@@ -26,4 +26,5 @@ jobs:
       with:
         token: ${{ secrets.GH_TOKEN }}
         event-type: workflow-b-event
-        client-payload: ${{ steps.prepare-payload.outputs.payload }}
+#         client-payload: ${{ steps.prepare-payload.outputs.payload }}
+        client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "test": "test message"}'
