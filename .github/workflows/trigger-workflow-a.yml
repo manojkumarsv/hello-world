@@ -19,10 +19,10 @@ jobs:
       id: prepare-payload
       run: |
         echo "{\"input1\": \"${{ github.event.inputs.input1 }}\", \"input2\": \"${{ github.event.inputs.input2 }}\"}" > payload.json
-        echo "cat payload.json"
+        cat payload.json
       
     - name: Trigger Workflow B
-      uses: peter-evans/repository-dispatch@v1
+      uses: peter-evans/repository-dispatch@v2.1.1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         event-type: workflow-b-event
