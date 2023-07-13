@@ -9,6 +9,9 @@ on:
       input2:
         description: 'DUTVersion'
         required: true
+      input3:
+        description: 'optionalParams'
+        required: false
 
 jobs:
   trigger-workflow-b:
@@ -28,4 +31,4 @@ jobs:
         event-type: workflow-b-event
 #         client-payload: ${{ steps.prepare-payload.outputs.payload }}
 #         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "STELabel": "${{ github.event.inputs.input1 }}", "DUTVersion": "${{ github.event.inputs.input2 }}" }'
-        client-payload: '{"STELabel": "${{ github.event.inputs.input1 }}", "DUTVersion": "${{ github.event.inputs.input2 }}" }'
+        client-payload: '{"STELabel": "${{ github.event.inputs.input1 }}", "DUTVersion": "${{ github.event.inputs.input2 }}", "optionalParams": "${{ github.event.inputs.input3 }}" }'
