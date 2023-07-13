@@ -35,13 +35,24 @@ jobs:
         client-payload: '{"STELabel": "${{ github.event.inputs.input1 }}", "DUTVersion": "${{ github.event.inputs.input2 }}", "optionalParams": ${{ github.event.inputs.input3 }} }'
         
     # Add this to WorkflowA.yml after the 'Trigger WorkflowB' step
-    - name: Wait and check the status of WorkflowB
-      uses: fountainhead/action-wait-for-commit-status@v1.0.0
-      id: check_status
+#     - name: Wait and check the status of WorkflowB
+#       uses: fountainhead/action-wait-for-commit-status@v1.0.0
+#       id: check_status
+#       with:
+#         github_token: ${{ secrets.GH_TOKEN }}
+#         workflow_name: workflow-b.yml
+#         owner: context.repo.owner
+#         repo: context.repo.repo
+#         ref: ${{ github.ref }}
+#         interval_seconds: 10
+        
+    - name: Dispatch an action and get the run ID
+      uses: codex-/return-dispatch@v1
+      id: return_dispatch
       with:
-        github_token: ${{ secrets.GH_TOKEN }}
-        workflow_name: workflow-b.yml
-        owner: context.repo.owner
+        token: ${{ secrets.GH_TOKEN }} # Note this is NOT GITHUB_TOKEN but a PAT
+        ref:  ${{ github.ref }}
         repo: context.repo.repo
-        ref: ${{ github.sha }}
-        interval_seconds: 10
+        owner: context.repo.owner
+        workflow: workflow-b.yml
+        workflow_timeout_seconds: 120 # Default: 300
