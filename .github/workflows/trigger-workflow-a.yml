@@ -34,15 +34,14 @@ jobs:
 #         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "STELabel": "${{ github.event.inputs.input1 }}", "DUTVersion": "${{ github.event.inputs.input2 }}" }'
         client-payload: '{"STELabel": "${{ github.event.inputs.input1 }}", "DUTVersion": "${{ github.event.inputs.input2 }}", "optionalParams": ${{ github.event.inputs.input3 }} }'
         
-    - name: Check Workflow B status
-      id: check-b
-      run: |
-        echo "Workflow B dispatch ID: ${{ steps.trigger-b.outputs.dispatch_id }}"
-        
-        # Retrieve the status of Workflow B using the dispatch ID
-        status=$(curl -s -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
-                  -H "Accept: application/vnd.github.everest-preview+json" \
-                  https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ steps.trigger-b.outputs.dispatch_id }} \
-                  | jq -r .status)
-        
-        echo "Workflow B status: $status"
+    # Add this to WorkflowA.yml after the 'Trigger WorkflowB' step
+    - name: Wait and check the status of WorkflowB
+      uses: dawidd6/action-checkout@v3
+      id: check_status
+      with:
+        github_token: ${{ secrets.GH_TOKEN }}
+        workflow_name: workflow-b.yml
+        owner: context.repo.owner
+        repo: context.repo.repo
+        ref: ${{ github.sha }}
+        interval_seconds: 10
