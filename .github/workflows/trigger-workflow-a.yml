@@ -36,7 +36,7 @@ jobs:
         
     # Add this to WorkflowA.yml after the 'Trigger WorkflowB' step
     - name: Wait and check the status of WorkflowB
-      uses: dawidd6/action-checkout@v3
+      uses: dawidd6/action-wait-for-check@v3
       id: check_status
       with:
         github_token: ${{ secrets.GH_TOKEN }}
